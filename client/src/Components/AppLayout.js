@@ -1,9 +1,7 @@
 import React from 'react';
 import { css } from 'react-emotion';
-import { logout } from '../PoolcamStitch';
 import ControlPanel from './ControlPanel';
 import InfoPanel from './InfoPanel';
-import Leaderboard from './Leaderboard';
 
 const Navbar = () =>
 <div className={css`

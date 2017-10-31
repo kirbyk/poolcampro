@@ -28,7 +28,7 @@ class Leaderboard extends Component {
   }
 
   renderItems() {
-    console.log(this.props.players);
+    // console.log(this.props.players);
   }
   
   render() {

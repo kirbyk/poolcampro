@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { css } from 'react-emotion';
 import 'whatwg-fetch';
+// import { getPlayersInQueue } from '../PoolcamStitch';
 import Button from './Button';
+import PlayerQueue from './PlayerQueue';
 
 const controlPanel = css`
   min-width: 1200px;
@@ -9,14 +11,18 @@ const controlPanel = css`
   align-items: center;
   text-align: center;
 `
-
 class ControlPanel extends Component {
   constructor(props) {
     super(props)
     this.state = {
       running: false,
-      message: "Pool cam pro is God"
+      message: "Pool cam pro is God",
+      queue: []
     }
+  }
+
+  componentDidMount() {
+    //getPlayersInQueue()
   }
 
   renderButton() {
@@ -76,6 +82,7 @@ class ControlPanel extends Component {
         <p>{this.state.message}</p>
         {this.renderButton()}
         <Button onClick={() => this.props.logout()}>Logout</Button>
+        <PlayerQueue players={this.state.queue} />
       </div>
     );
   }
