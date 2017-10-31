@@ -1,19 +1,20 @@
 const shell = require("shelljs")
 const ObjectID = require("bson-objectid")
+const util = require("./util.js")
 
-let gamePath = null
+let gameID = null
 let process = null
 
 exports.begin = () => {
-  const currentGame = ObjectID()
-  gamePath = `games/${currentGame}.mpg`
+  gameID = ObjectID()
+  gamePath = util.gameIdToPath(gameID)
   process = record(gamePath)
-  return currentGame
+  return gameID
 }
 
 exports.end = () => {
   process.kill()
-  return gamePath
+  return gameID
 }
 
 const record = (gamePath) => {
