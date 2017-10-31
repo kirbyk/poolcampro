@@ -4,12 +4,11 @@ const http = require('http')
 const recorder = require('./recorder.js')
 const uploader = require('./uploader.js')
 const util = require('./util.js')
-
+const elo = require('./elo.js')
 
 const app = express()
 app.use(cors())
 const server = http.createServer(app)
-
 
 let currentlyRecording = false
 let gameID = null
