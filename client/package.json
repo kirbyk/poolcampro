@@ -1,0 +1,24 @@
+{
+  "name": "poolcampro",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "babel-plugin-emotion": "^8.0.9",
+    "emotion": "^8.0.9",
+    "mongodb-stitch": "^1.1.8",
+    "node-fetch": "^1.7.3",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-emotion": "^8.0.9",
+    "whatwg-fetch": "^2.0.3"
+  },
+  "devDependencies": {
+    "react-scripts": "1.0.14"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
