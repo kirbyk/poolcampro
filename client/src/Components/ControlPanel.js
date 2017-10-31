@@ -4,7 +4,7 @@ import 'whatwg-fetch';
 import Button from './Button';
 
 const controlPanel = css`
-  width: 60%;
+  min-width: 1200px;
   background: red;
   align-items: center;
   text-align: center;

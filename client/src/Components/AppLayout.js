@@ -1,5 +1,9 @@
 import React from 'react';
 import { css } from 'react-emotion';
+import { logout } from '../PoolcamStitch';
+import ControlPanel from './ControlPanel';
+import InfoPanel from './InfoPanel';
+import Leaderboard from './Leaderboard';
 
 const Navbar = () =>
 <div className={css`
@@ -27,7 +31,10 @@ const appLayout = css`
 const AppLayout = (props) =>
   <div className={appLayout}>
     <Navbar />
-    <Content>{props.children}</Content>
+    <Content>
+      <ControlPanel logout={() => props.logout()} />
+      <InfoPanel />
+    </Content>
   </div>
 
 

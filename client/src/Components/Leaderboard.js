@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { css } from 'react-emotion';
 
+const leaderboard = css`
+  width: 100%
+`
+
 const LeaderboardItem = (props) => {
   let player = props.player
   return (
@@ -8,7 +12,7 @@ const LeaderboardItem = (props) => {
       display: flex;
       flex-direction: row;
       background: palevioletred;
-      width: 600px;
+      width: 100%;
     `}>
       <div className={css`flex-grow: 3`}>{player.name}</div>
       <div className={css`flex-grow: 1`}>{player.wins}</div>
@@ -29,9 +33,9 @@ class Leaderboard extends Component {
   
   render() {
     return (
-      <div>
-      <p>Leaderboard</p>
-      <LeaderboardItem player={{name: "Nick Larew", wins: 10, losses: 8}} />
+      <div className={leaderboard}>
+        <p>Leaderboard</p>
+        <LeaderboardItem player={{name: "Nick Larew", wins: 10, losses: 8}} />
       </div>
     )
   }

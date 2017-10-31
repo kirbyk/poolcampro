@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Link } from 'react-router-dom';
+// import { BrowserRouter, Link, Route } from 'react-router-dom';
 import AppLayout from './Components/AppLayout'
-import ControlPanel from './Components/ControlPanel'
-import Leaderboard from './Components/Leaderboard';
 import LoginScreen from './Components/LoginScreen';
 import { login, logout, getUserProfile } from './PoolcamStitch';
 
@@ -18,17 +16,9 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.user) {
-      return (
-        <AppLayout>
-          <ControlPanel logout={() => this.logout()} />
-          <Leaderboard players={[{ name: "Nick Larew", wins: 10, losses: 8 }, { name: "Nick Larew", wins: 10, losses: 8 }]} />
-        </AppLayout>
-      )
-    }
-    else {
-      return <LoginScreen login={() => login()} />
-    }
+    return this.state.user
+            ? <AppLayout logout={() => this.logout()}/>
+            : <LoginScreen login={() => login()} />
   }
 }
 export default App;
