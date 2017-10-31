@@ -5,6 +5,7 @@ const recorder = require('./recorder.js')
 const uploader = require('./uploader.js')
 const util = require('./util.js')
 const objectIdToTimestamp = require('objectid-to-timestamp')
+const iso = require('iso8601')
 
 
 const app = express()
@@ -15,12 +16,16 @@ const server = http.createServer(app)
 let currentlyRecording = false
 let gameID = null
 
+function curISO8601() {
+  return iso.fromDate(new Date(Date.now()))
+}
+
 app.get('/currentGame', (req, res) => {
   if (currentlyRecording) {
     return res.json({
       "gameInProgress": currentlyRecording,
       "gameID": gameID,
-      "gameStartTime": objectIdToTimestamp(gameID),
+      "gameStartTime": curISO8601(),
     })
   }
 
@@ -35,7 +40,7 @@ app.get('/beginGame', (req, res) => {
       "success": false,
       "msg": "A recording is currently in progress.",
       "gameID": gameID,
-      "gameStartTime": objectIdToTimestamp(gameID),
+      "gameStartTime": curISO8601(),
     })
   }
 
@@ -46,7 +51,7 @@ app.get('/beginGame', (req, res) => {
     "success": true,
     "msg": "Recording has begun",
     "gameID": gameID,
-    "gameStartTime": objectIdToTimestamp(gameID),
+    "gameStartTime": curISO8601(),
   })
 })
 
@@ -62,7 +67,7 @@ app.get('/endGame', (req, res) => {
     return res.json({
       "success": true,
       "msg": "Recording has ended",
-      "gameEndTime": util.currentUnixTime(),
+      "gameEndTime": curISO8601(),
     })
   }
 
