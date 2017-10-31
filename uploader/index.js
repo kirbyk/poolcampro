@@ -4,7 +4,6 @@ const http = require('http')
 const recorder = require('./recorder.js')
 const uploader = require('./uploader.js')
 const util = require('./util.js')
-const objectIdToTimestamp = require('objectid-to-timestamp')
 
 
 const app = express()
@@ -20,7 +19,6 @@ app.get('/currentGame', (req, res) => {
     return res.json({
       "gameInProgress": currentlyRecording,
       "gameID": gameID,
-      "gameStartTime": objectIdToTimestamp(gameID),
     })
   }
 
@@ -35,7 +33,6 @@ app.get('/beginGame', (req, res) => {
       "success": false,
       "msg": "A recording is currently in progress.",
       "gameID": gameID,
-      "gameStartTime": objectIdToTimestamp(gameID),
     })
   }
 
@@ -46,7 +43,6 @@ app.get('/beginGame', (req, res) => {
     "success": true,
     "msg": "Recording has begun",
     "gameID": gameID,
-    "gameStartTime": objectIdToTimestamp(gameID),
   })
 })
 
@@ -62,7 +58,6 @@ app.get('/endGame', (req, res) => {
     return res.json({
       "success": true,
       "msg": "Recording has ended",
-      "gameEndTime": util.currentUnixTime(),
     })
   }
 
