@@ -46,6 +46,10 @@ brace-expansion@^1.1.7:
     balanced-match "^1.0.0"
     concat-map "0.0.1"
 
+bson-objectid@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/bson-objectid/-/bson-objectid-1.2.1.tgz#638b668f9afa00028c277a45917720dc573e2f1b"
+
 bytes@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.0.0.tgz#d32815404d689699f85a4ea4fa8755dd13a96048"

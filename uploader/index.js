@@ -11,22 +11,37 @@ const server = http.createServer(app)
 
 
 let currentlyRecording = false
+let gameID = null
+
+app.get('/currentGame', (req, res) => {
+  if (currentlyRecording) {
+    return res.json({
+      "gameInProgress": currentlyRecording,
+      "gameID": gameID,
+    })
+  }
+
+  return res.json({
+    "gameInProgress": currentlyRecording,
+  })
+})
 
 app.get('/beginGame', (req, res) => {
   if (currentlyRecording) {
     return res.json({
       "success": false,
-      "msg": "A recording is currently in progress."
+      "msg": "A recording is currently in progress.",
+      "gameID": gameID,
     })
   }
 
-  recorder.begin()
-
+  gameID = recorder.begin()
   currentlyRecording = true
 
   return res.json({
     "success": true,
-    "msg": "Recording has begun"
+    "msg": "Recording has begun",
+    "gameID": gameID,
   })
 })
 
@@ -34,8 +49,9 @@ app.get('/endGame', (req, res) => {
   if (currentlyRecording) {
     const gamePath = recorder.end()
 
-    uploader.uploadDir(gamePath)
+    uploader.upload(gamePath)
 
+    gameID = null
     currentlyRecording = false
 
     return res.json({
