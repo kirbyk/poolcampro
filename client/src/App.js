@@ -17,7 +17,7 @@ class App extends Component {
 
   render() {
     return this.state.user
-            ? <AppLayout logout={() => this.logout()}/>
+            ? <AppLayout logout={() => this.logout()} />
             : <LoginScreen login={() => login()} />
   }
 }
