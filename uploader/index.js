@@ -195,4 +195,19 @@ app.get('/players/suggestions', (req, res) => {
   })
 })
 
+app.get('/games/lastTen', (req, res) => {
+  games.lastTenGames().then(lastGames => {
+    return res.json({
+      "success": true,
+      "lastTenGames": lastGames
+    })
+  }).catch(err => {
+    console.log(err)
+    return res.json({
+      "success": false,
+      "err_msg": err.message
+    })
+  })
+})
+
 server.listen(8080)

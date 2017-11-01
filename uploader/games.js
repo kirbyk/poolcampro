@@ -97,3 +97,9 @@ exports.getPreviousGamesForPlayer = (player_id) => {
 
     return games.find({"players.id": player_id}).sort("startTime", -1).toArray()
 }
+
+exports.lastTenGames = () => {
+    let games = mongo.get().collection("games")
+
+    return games.find({endTime: {$exists: true}}).sort("endTime", -1).limit(10).toArray()
+}
