@@ -3,7 +3,6 @@ import { css } from 'react-emotion';
 import Button from 'material-ui/Button';
 import Divider from 'material-ui/Divider';
 import Typography from 'material-ui/Typography';
-import Paper from 'material-ui/Paper';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import Tooltip from 'material-ui/Tooltip';
@@ -43,7 +42,6 @@ const PlayerQueueItem = (props) =>{
       </Avatar>
       <ListItemText
         primary={ props.player.name }
-        secondary={ `W: ${props.player.wins} L: ${props.player.losses}` }
       />
       <LeaveButton onClick={() => props.remove(props.player)} hidden={props.player._id !== me._id} />
     </ListItem>
@@ -120,15 +118,14 @@ class PlayerQueue extends Component {
     let userIsInQueue = this.state.queue.filter(p => p._id === me._id).length > 0
     console.log(userIsInQueue);
     return (
-      <Paper className={css`min-width: 96%; margin: auto; margin: 10px 0px;`}>
-      <Typography type="display2" className={css`
+      <div>
+      <Typography type="title" className={css`
         padding: 10px;
       `}>
         Game Queue
       </Typography>
       <div className={css`
         width: 100%;
-        height: 480px;
         text-align: center;
         display: flex;
         flex-direction: column;
@@ -137,7 +134,6 @@ class PlayerQueue extends Component {
         {this.renderPlayersInQueue()}
         {
           <div>
-            <Divider />
             <div className={css`
               height: 35px;
               padding: 5px 0;
@@ -148,13 +144,13 @@ class PlayerQueue extends Component {
                 className={this.props.styles.button}
                 onClick={() => this.addPlayerToQueue(me)}
               >
-                Queue Up
+                Add Yourself to the Queue
               </Button>
             </div>
           </div>
         }
         </div>
-      </Paper>
+      </div>
     )
   }
 }

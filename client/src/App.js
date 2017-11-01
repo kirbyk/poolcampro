@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import { css } from 'emotion';
-// import { withStyles } from 'material-ui/styles';
-// import Typography from 'material-ui/Typography';
 import 'typeface-roboto';
-// import Button from 'material-ui/Button';
 
 import Grid from 'material-ui/Grid';
-import Divider from 'material-ui/Divider';
-// import InboxIcon from 'material-ui-icons/Inbox';
-// import DraftsIcon from 'material-ui-icons/Drafts';
 import PoolcamAppBar from "./Components/PoolcamAppBar";
 import RecentGames from './Components/RecentGames';
 import ActiveGame from './Components/ActiveGame';
@@ -34,23 +28,28 @@ class App extends Component {
       },
     });
 
+    // need to fetch this from some API
+    const gameInProgress = false
+    let activeGameOrPlayerQueue = null
+    if (gameInProgress) {
+      activeGameOrPlayerQueue = <ActiveGame styles={styles} />
+    } else {
+      activeGameOrPlayerQueue = <PlayerQueue styles={styles} />
+    }
+
     return (
       <div className={styles.root}>
         <PoolcamAppBar styles={styles} />
         <div className={css`padding: 0px 10px;`}>
         <Grid container spacing={24}>
           <Grid item xs={12} sm={6}>
-            <ActiveGame styles={styles}/>
-            <PlayerQueue styles={styles} />
+            { activeGameOrPlayerQueue }
           </Grid>
           <Grid item xs={12} sm={6}>
             <RecentGames />
           </Grid>
         </Grid>
         </div>
-
-
-
       </div>
     );
   }
