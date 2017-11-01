@@ -23,3 +23,8 @@ exports.getNameSuggestions = (namestub) => {
 	let users = mongo.get().collection("users")
 	return users.find({name: {$regex: `^${namestub}`, $options: 'i'}}).sort({name: 1}).project({name: 1}).toArray()
 }
+
+exports.getAllNames = () => {
+	let users = mongo.get().collection("users")
+	return users.find().sort({name: 1}).project({name: 1}).toArray()
+}
