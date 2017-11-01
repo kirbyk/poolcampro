@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { css } from 'emotion';
 import 'typeface-roboto';
 
+import Divider from 'material-ui/Divider';
+import Drawer from 'material-ui/Drawer';
+import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Grid from 'material-ui/Grid';
 import PoolcamAppBar from "./Components/PoolcamAppBar";
 import RecentGames from './Components/RecentGames';
@@ -10,6 +13,19 @@ import ActiveGame from './Components/ActiveGame';
 import PlayerQueue from './Components/PlayerQueue';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      drawerOpen: false,
+    };
+  }
+
+  toggleDrawer = (open) => () => {
+    this.setState({
+      drawerOpen: open,
+    });
+  };
+
   render() {
     const styles = theme => ({
       root: {
@@ -37,9 +53,34 @@ class App extends Component {
       activeGameOrPlayerQueue = <PlayerQueue styles={styles} />
     }
 
+    const sideList = (
+      <List>
+        <ListItem button>
+          <ListItemText primary="Leaderboard" />
+        </ListItem>
+
+        <Divider />
+
+        <ListItem button>
+          <ListItemText primary="Recent Games" />
+        </ListItem>
+      </List>
+    );
+
     return (
       <div className={styles.root}>
-        <PoolcamAppBar styles={styles} />
+        <Drawer open={this.state.drawerOpen} onRequestClose={this.toggleDrawer(false)}>
+          <div
+            role="button"
+            onClick={this.toggleDrawer('left', false)}
+            onKeyDown={this.toggleDrawer('left', false)}
+          >
+            {sideList}
+          </div>
+        </Drawer>
+
+        <PoolcamAppBar styles={styles} toggleDrawer={this.toggleDrawer} />
+
         <div className={css`padding: 0px 10px;`}>
         <Grid container spacing={24}>
           <Grid item xs={12} sm={6}>

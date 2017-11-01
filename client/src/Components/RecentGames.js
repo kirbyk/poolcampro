@@ -1,6 +1,7 @@
 import React from 'react';
 import Typography from 'material-ui/Typography';
 import List, { ListItem, /*ListItemIcon,*/ ListItemText } from 'material-ui/List';
+import Button from 'material-ui/Button';
 
 const RecentGames = () =>
 <div>
@@ -14,10 +15,16 @@ const RecentGames = () =>
     <ListItem button>
       <ListItemText primary="Dev vs Kirby 1 hour ago" />
     </ListItem>
-    <ListItem button>
-      <ListItemText primary="All Games"/>
+    <ListItem>
+              <Button
+                raised
+                color={"primary"}
+              >
+                View All Games
+              </Button>
     </ListItem>
   </List>
 </div>
 
 export default RecentGames
+
