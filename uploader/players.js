@@ -16,6 +16,10 @@ exports.updatePlayerEloAndWL = function (oid, new_elo, won_game) {
 
 exports.getTopTenPlayers = () => {
 	let users = mongo.get().collection("users")
-
 	return users.find({$or: [{wins: {$gt: 0}}, {losses: {$gt: 0}}]}).sort("elo", -1).limit(10).toArray()
+}
+
+exports.getNameSuggestions = (namestub) => {
+	let users = mongo.get().collection("users")
+	return users.find({name: {$regex: `^${namestub}`, $options: 'i'}}).sort({name: 1}).project({name: 1}).toArray()
 }

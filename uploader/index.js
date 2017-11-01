@@ -164,4 +164,19 @@ app.get('/player/:id/previousGames', (req, res) => {
   }
 
 })
+
+app.get('/players/suggestions/:namestub', (req, res) => {
+  players.getNameSuggestions(req.params.namestub).then(suggestions => {
+    return res.json({
+      "success": true,
+      "suggestions": suggestions
+    })
+  }).catch(err => {
+    console.log(err)
+    return res.json({
+      "success": false,
+      "err_msg": err.message
+    })
+  })
+})
 server.listen(8080)
