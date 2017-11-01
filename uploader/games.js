@@ -103,3 +103,9 @@ exports.lastTenGames = () => {
 
     return games.find({endTime: {$exists: true}}).sort("endTime", -1).limit(10).toArray()
 }
+
+exports.getRecentGames = (page, pageLimit) => {
+    let games = mongo.get().collection("games")
+
+    return games.find({endTime: {$exists: true}}).sort("endTime", -1).skip(pageLimit*page).limit(pageLimit).toArray()
+}

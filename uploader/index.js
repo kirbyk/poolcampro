@@ -142,6 +142,34 @@ app.get('/leaderboard/topTen', (req, res) => {
   })
 })
 
+app.get('/leaderboard/byElo', (req, res) => {
+  let page = 0
+  let pageLimit = 10
+
+  if (req.query.page && parseInt(req.query.page) != NaN) {
+    page = parseInt(req.query.page)
+  }
+  if (req.query.pageLimit && parseInt(req.query.pageLimit) != NaN) {
+    pageLimit = parseInt(req.query.pageLimit)
+  }
+
+  console.log("page", page)
+  console.log("pageLimit", pageLimit)
+
+  players.leaderboardByElo(page, pageLimit).then(lst => {
+    return res.json({
+      "success": true,
+      "players": lst
+    })
+  }).catch(err => {
+    console.log(err)
+    return res.json({
+      "success": false,
+      "err_msg": err.message
+    })
+  })
+})
+
 app.get('/player/:id/previousGames', (req, res) => {
   try {
     games.getPreviousGamesForPlayer(ObjectId(req.params.id)).then(prev_games => {
@@ -306,6 +334,31 @@ app.get('/queue/pop', (req, res) => {
         "msg": "queue is empty"
       })
     }
+})
+
+app.get('/games/recent', (req, res) => {
+  let page = 0
+  let pageLimit = 10
+
+  if (req.query.page && parseInt(req.query.page) != NaN) {
+    page = parseInt(req.query.page)
+  }
+  if (req.query.pageLimit && parseInt(req.query.pageLimit) != NaN) {
+    pageLimit = parseInt(req.query.pageLimit)
+  }
+
+  games.getRecentGames(page, pageLimit).then(lst => {
+    return res.json({
+      "success": true,
+      "recentGames": lst
+    })
+  }).catch(err => {
+    console.log(err)
+    return res.json({
+      "success": false,
+      "err_msg": err.message
+    })
+  })
 })
 
 server.listen(8080)
