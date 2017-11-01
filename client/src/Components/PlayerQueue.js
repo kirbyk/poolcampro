@@ -115,7 +115,6 @@ class PlayerQueue extends Component {
 
   render() {
     let userIsInQueue = this.state.queue.filter(p => p._id === me._id).length > 0
-    console.log(userIsInQueue);
     return (
       <div className={css`flex-grow: 1`}>
       <Typography type="title" className={css`

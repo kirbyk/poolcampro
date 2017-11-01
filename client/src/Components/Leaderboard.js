@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { css } from 'react-emotion';
 import Typography from 'material-ui/Typography';
+import Divider from 'material-ui/Divider';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 
 const leaderboard = css`
@@ -36,9 +37,12 @@ class Leaderboard extends Component {
   render() {
     return (
       <div className={leaderboard}>
-      <Typography type="title">
+      <Typography type="title" className={css`
+        padding: 10px;
+      `}>
         Leaderboard
       </Typography>
+      <Divider />      
       <List>
         <ListItem button style={{"font-weight": "bold"}}>
         <LeaderboardItem player={{name: "Name", wins: "Wins", losses: "Losses", elo: "ELO Rating"}} />

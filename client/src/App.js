@@ -76,7 +76,7 @@ class App extends Component {
 
         <PoolcamAppBar styles={styles} toggleDrawer={this.toggleDrawer} />
 
-        <div className={css`padding: 0px 10px;`}>
+        <div className={css`padding: 5px 10px;`}>
         <Grid container spacing={24}>
           <Grid item xs={12} sm={6}>
             <div className={css`
