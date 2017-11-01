@@ -8,6 +8,7 @@ import Dialog, {
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog';
+import PlayerAutosuggest from './PlayerAutosuggest.js';
 
 
 export default class ActiveGame extends React.Component {
@@ -35,6 +36,9 @@ export default class ActiveGame extends React.Component {
               To start a new game enter your name and your opponent's name and
               click begin.
             </DialogContentText>
+
+            <PlayerAutosuggest />
+
             <TextField
               autoFocus
               margin="dense"
