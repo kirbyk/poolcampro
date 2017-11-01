@@ -175,7 +175,7 @@ app.get('/player/:id/previousGames', (req, res) => {
     games.getPreviousGamesForPlayer(ObjectId(req.params.id)).then(prev_games => {
       return res.json({
         "success": true,
-        "players": prev_games
+        "games": prev_games
       })
     }).catch(err => {
       console.log(err)
