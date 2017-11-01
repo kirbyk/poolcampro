@@ -117,36 +117,27 @@ class PlayerQueue extends Component {
     let userIsInQueue = this.state.queue.filter(p => p._id === me._id).length > 0
     return (
       <div className={css`flex-grow: 1`}>
-      <Typography type="title" className={css`
-        padding: 10px;
-      `}>
-        Game Queue
-      </Typography>
-      <div className={css`
-        width: 100%;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-      `}>
-        <Divider />
-        {this.renderPlayersInQueue()}
-        {
-          <div>
-            <div className={css`
-              height: 35px;
-              padding: 5px 0;
-            `}>
-              <Button
-                raised
-                color={!userIsInQueue ? "primary" : "secondary"}
-                className={this.props.styles.button}
-                onClick={() => this.addPlayerToQueue(me)}
-              >
-                Add Yourself to the Queue
-              </Button>
-            </div>
-          </div>
-        }
+        <Typography type="title" className={css`
+          padding: 10px;
+        `}>
+          Game Queue
+          <Button
+            raised
+            color={!userIsInQueue ? "primary" : "secondary"}
+            className={css`margin: 0 0 0 10px;` }
+            onClick={() => this.addPlayerToQueue(me)}
+          >
+            Add Yourself to the Queue
+          </Button>
+        </Typography>
+        <div className={css`
+          width: 100%;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+        `}>
+          <Divider />
+          {this.renderPlayersInQueue()}
         </div>
       </div>
     )
