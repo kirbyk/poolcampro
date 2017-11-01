@@ -9,6 +9,7 @@ import Grid from 'material-ui/Grid';
 import PoolcamAppBar from "./Components/PoolcamAppBar";
 import RecentGames from './Components/RecentGames';
 import ActiveGame from './Components/ActiveGame';
+import Leaderboard from './Components/Leaderboard'
 
 import PlayerQueue from './Components/PlayerQueue';
 
@@ -88,6 +89,7 @@ class App extends Component {
           </Grid>
           <Grid item xs={12} sm={6}>
             <RecentGames />
+            <Leaderboard />
           </Grid>
         </Grid>
         </div>
