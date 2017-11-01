@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
-import { withStyles } from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
+import { css } from 'emotion';
+// import { withStyles } from 'material-ui/styles';
+// import Typography from 'material-ui/Typography';
+import 'typeface-roboto';
+// import Button from 'material-ui/Button';
+
 import Grid from 'material-ui/Grid';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-import InboxIcon from 'material-ui-icons/Inbox';
-import DraftsIcon from 'material-ui-icons/Drafts';
+// import InboxIcon from 'material-ui-icons/Inbox';
+// import DraftsIcon from 'material-ui-icons/Drafts';
+import PoolcamAppBar from "./Components/PoolcamAppBar";
+import RecentGames from './Components/RecentGames';
+import ActiveGame from './Components/ActiveGame';
+
+import PlayerQueue from './Components/PlayerQueue';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-
   render() {
     const styles = theme => ({
       root: {
@@ -38,45 +36,18 @@ class App extends Component {
 
     return (
       <div className={styles.root}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton className={styles.menuButton} color="contrast" aria-label="Menu">
-              <MenuIcon />
-            </IconButton>
-            <Typography type="title" color="inherit" className={styles.flex}>
-              PoolCam Pro 🎱
-            </Typography>
-          </Toolbar>
-        </AppBar>
-
+        <PoolcamAppBar styles={styles} />
+        <div className={css`padding: 0px 10px;`}>
         <Grid container spacing={24}>
           <Grid item xs={12} sm={6}>
-
-            <Button raised color="primary" className={styles.button}>
-              Begin Game
-            </Button>
-
+            <ActiveGame styles={styles}/>
+            <PlayerQueue styles={styles} />
           </Grid>
           <Grid item xs={12} sm={6}>
-
-            <Typography type="subheading">
-              Recent Games
-            </Typography>
-
-            <List>
-              <ListItem button>
-                <ListItemText primary="Jerzy vs Kirby 23 minutes ago" />
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="Dev vs Kirby 1 hour ago" />
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="All Games"/>
-              </ListItem>
-            </List>
-
+            <RecentGames />
           </Grid>
         </Grid>
+        </div>
 
 
 
