@@ -8,6 +8,7 @@ const util = require('./util.js')
 const mongo = require('./mongo.js')
 const players = require('./players.js')
 const games = require('./games.js')
+const ObjectId = require('mongodb').ObjectId
 
 mongo.connect()
 const app = express()
@@ -125,4 +126,42 @@ app.post('/endGame', (req, res) => {
   })
 })
 
+app.get('/leaderboard/topTen', (req, res) => {
+  players.getTopTenPlayers().then(lst => {
+    return res.json({
+      "success": true,
+      "players": lst
+    })
+  }).catch(err => {
+    console.log(err)
+    return res.json({
+      "success": false,
+      "err_msg": err.message
+    })
+  })
+})
+
+app.get('/player/:id/previousGames', (req, res) => {
+  try {
+    games.getPreviousGamesForPlayer(ObjectId(req.params.id)).then(prev_games => {
+      return res.json({
+        "success": true,
+        "players": prev_games
+      })
+    }).catch(err => {
+      console.log(err)
+      return res.json({
+        "success": false,
+        "err_msg": err.message
+      })
+    })
+  } catch(err) {
+      console.log(err)
+      return res.json({
+        "success": false,
+        "err_msg": err.message
+      })
+  }
+
+})
 server.listen(8080)

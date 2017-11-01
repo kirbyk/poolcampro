@@ -90,3 +90,10 @@ exports.getGameById = (recording_id) => {
     let games = mongo.get().collection("games")
     return games.findOne({_id: recording_id})
 }
+
+// expects ObjectID
+exports.getPreviousGamesForPlayer = (player_id) => {
+    let games = mongo.get().collection("games")
+
+    return games.find({"players.id": player_id}).sort("startTime", -1).toArray()
+}
