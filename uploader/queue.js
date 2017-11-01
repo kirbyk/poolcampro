@@ -9,7 +9,9 @@ exports.get = () => {
 // expects object id, returns promise
 exports.add = (player_id) => {
 	return players.getPlayerById(player_id).then(player => {
-		queue.push(player)
+		if(player) {
+			queue.push(player)
+		}
 		return queue
 	})
 }
