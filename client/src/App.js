@@ -11,7 +11,6 @@ import RecentGames from './Components/RecentGames';
 import ActiveGame from './Components/ActiveGame';
 import Leaderboard from './Components/Leaderboard'
 
-import PlayerQueue from './Components/PlayerQueue';
 
 class App extends Component {
   constructor(props) {
@@ -44,9 +43,6 @@ class App extends Component {
         margin: theme.spacing.unit,
       },
     });
-
-    // need to fetch this from some API
-    const gameInProgress = false
 
     const sideList = (
       <List>
@@ -85,7 +81,6 @@ class App extends Component {
               height: 100%;
             `}>
               <ActiveGame styles={styles} />
-              <PlayerQueue styles={styles} />
             </div>
           </Grid>
           <Grid item xs={12} sm={6}>
