@@ -13,7 +13,10 @@ exports.begin = () => {
 }
 
 exports.end = () => {
-  process.kill()
+  if(process) {
+  	process.kill()
+  }
+  process = null
   return gameID
 }
 
