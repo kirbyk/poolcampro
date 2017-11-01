@@ -1,49 +1,101 @@
 import React, { Component } from 'react';
 import { css } from 'react-emotion';
-import Button from './Button';
+import Button from 'material-ui/Button';
+import Divider from 'material-ui/Divider';
+import Typography from 'material-ui/Typography';
+import List, { ListItem, ListItemText } from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
+import Tooltip from 'material-ui/Tooltip';
+import PersonIcon from 'material-ui-icons/Person';
+import CancelIcon from 'material-ui-icons/Cancel';
 
-const playerQueue = css`
-  width: 100%;
-  background: skyblue;
-  align-items: center;
-  text-align: center;
-  margin: 30px 0 0 0;
+const me = { _id: 7, name: "Nick Larew", wins: "10", losses: "8" }
+
+const leaveButton = css`
+  font-weight: bold;
+  padding: 5px 0px 0px 0px;
+  cursor: pointer;
 `
+const LeaveButton = (props) => 
+<a className={leaveButton}
+   onClick={props.hidden ? null : () => props.onClick()}
+>
+  <div className={css`width: 30px;`}>
+    { !props.hidden
+      ? <Tooltip id="tooltip-cancel" title="Leave the Queue" placement="top">
+          <CancelIcon />
+        </Tooltip>
+      : ""
+    }
+  </div>
+</a>
 
-const PlayerQueueItem = (props) =>
-<div className={css`
-  height: 24px;
-  line-height: 24px;
-  width: 100%;
-  background: teal;
-  display: flex;
-  flex-direction: row;
-  margin: 3px 0 0 0;
-  padding: 2px 0;
-  justify-content: center;
-`}>
-  <span className={css`min-width: 150px; text-align: left`}>{props.player.name}</span>
-  <span className={css`min-width: 50px;`}>W: {props.player.wins}</span>
-  <span className={css`min-width: 50px;`}>L: {props.player.losses}</span>
-  <span className={css`font-weight: bold; padding: 0px 5px; border: 1px solid black;`}>X</span>
-</div>
-
-const player = { name: "Dev Ittycheria", wins: 42, losses: 0 }
+const playerQueueItem = css`
+  flex-grow: 3;
+  max-width: 300px;
+`
+const PlayerQueueItem = (props) =>{
+  return <div className={playerQueueItem}>
+    <ListItem>
+      <Avatar>
+        <PersonIcon />
+      </Avatar>
+      <ListItemText
+        primary={ props.player.name }
+      />
+      <LeaveButton onClick={() => props.remove(props.player)} hidden={props.player._id !== me._id} />
+    </ListItem>
+  </div>
+}
 
 class PlayerQueue extends Component {
   constructor(props) {
     super(props)
     this.state = {
       queue: [
-        { name: "Nick Larew", wins: "10", losses: "8" },
-        { name: "Kirby Kohlmorgen", wins: "30", losses: "4" }
+        { _id: 1, name: "Dev Ittycheria", wins: 42, losses: 0 },
+        { _id: 2, name: "Kay Kim", wins: 42, losses: 0 },
+        { _id: 3, name: "Shannon Bradshaw", wins: 42, losses: 0 },
+        { _id: 4, name: "Niyati Shah", wins: 42, losses: 0 },
+        { _id: 5, name: "Andrew Aldridge", wins: 42, losses: 0 },
+        { _id: 6, name: "Jon DeStefano", wins: 42, losses: 0 },
+        // { _id: 7, name: "Nick Larew", wins: "10", losses: "8" },
+        { _id: 8, name: "Rhys Howell", wins: 42, losses: 0 },
+        { _id: 9, name: "Kirby Kohlmorgen", wins: "30", losses: "4" },
+        { _id: 10, name: "Daniel Coupal", wins: 42, losses: 0 },
+        { _id: 11, name: "Rob Justice", wins: 42, losses: 0 },
+        { _id: 12, name: "Tony Sansone", wins: 42, losses: 0 },
+        { _id: 13, name: "Norberto Leite", wins: 42, losses: 0 },
       ]
     }
   }
 
   renderPlayersInQueue() {
-    return this.state.queue.map(
-      p => <PlayerQueueItem player={p} key={p.name} />
+    let queueItemContainer = css`
+      display: flex;
+      flex-direction: row;
+    `
+    let Spacer = () => <div className={css`flex-grow: 1;`} />
+    return (
+      <div className={css`overflow-y: scroll;`}>
+      <List>
+      {
+        this.state.queue.map(p => 
+          <div className={css`width: 100%;`} key={p.name}>
+            <div className={queueItemContainer}>
+              <Spacer />
+              <PlayerQueueItem
+                player={p}
+                remove={p => this.removePlayerFromQueue(p)}
+              />
+              <Spacer />
+            </div>          
+            <Divider />
+          </div>          
+        )
+      }
+      </List>
+      </div>
     )
   }
 
@@ -51,9 +103,7 @@ class PlayerQueue extends Component {
     let queue = this.state.queue
     if (!queue.includes(player)) {
       queue.push(player)
-      this.setState({ queue: queue})
-    } else {
-      console.log('User already in queue')
+      this.setState({ queue: queue })
     }
   }
 
@@ -65,11 +115,41 @@ class PlayerQueue extends Component {
   }
 
   render() {
-    return(
-      <div className={playerQueue}>
-        <Button onClick={() => this.addPlayerToQueue(player)}>Add Player</Button>
-        <Button onClick={() => this.removePlayerFromQueue(player)}>Remove Player</Button>
+    let userIsInQueue = this.state.queue.filter(p => p._id === me._id).length > 0
+    console.log(userIsInQueue);
+    return (
+      <div>
+      <Typography type="title" className={css`
+        padding: 10px;
+      `}>
+        Game Queue
+      </Typography>
+      <div className={css`
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+      `}>
+        <Divider />
         {this.renderPlayersInQueue()}
+        {
+          <div>
+            <div className={css`
+              height: 35px;
+              padding: 5px 0;
+            `}>
+              <Button
+                raised
+                color={!userIsInQueue ? "primary" : "secondary"}
+                className={this.props.styles.button}
+                onClick={() => this.addPlayerToQueue(me)}
+              >
+                Add Yourself to the Queue
+              </Button>
+            </div>
+          </div>
+        }
+        </div>
       </div>
     )
   }

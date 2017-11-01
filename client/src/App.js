@@ -1,22 +1,31 @@
 import React, { Component } from 'react';
-import { withStyles } from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
-import Grid from 'material-ui/Grid';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import { css } from 'emotion';
+import 'typeface-roboto';
+
 import Divider from 'material-ui/Divider';
-import InboxIcon from 'material-ui-icons/Inbox';
-import DraftsIcon from 'material-ui-icons/Drafts';
+import Drawer from 'material-ui/Drawer';
+import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import Grid from 'material-ui/Grid';
+import PoolcamAppBar from "./Components/PoolcamAppBar";
+import RecentGames from './Components/RecentGames';
+import ActiveGame from './Components/ActiveGame';
+import Leaderboard from './Components/Leaderboard'
+
+import PlayerQueue from './Components/PlayerQueue';
 
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      drawerOpen: false,
+    };
   }
 
+  toggleDrawer = (open) => () => {
+    this.setState({
+      drawerOpen: open,
+    });
+  };
 
   render() {
     const styles = theme => ({
@@ -36,50 +45,54 @@ class App extends Component {
       },
     });
 
+    // need to fetch this from some API
+    const gameInProgress = false
+    let activeGameOrPlayerQueue = null
+    if (gameInProgress) {
+      activeGameOrPlayerQueue = <ActiveGame styles={styles} />
+    } else {
+      activeGameOrPlayerQueue = <PlayerQueue styles={styles} />
+    }
+
+    const sideList = (
+      <List>
+        <ListItem button>
+          <ListItemText primary="Leaderboard" />
+        </ListItem>
+
+        <Divider />
+
+        <ListItem button>
+          <ListItemText primary="Recent Games" />
+        </ListItem>
+      </List>
+    );
+
     return (
       <div className={styles.root}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton className={styles.menuButton} color="contrast" aria-label="Menu">
-              <MenuIcon />
-            </IconButton>
-            <Typography type="title" color="inherit" className={styles.flex}>
-              PoolCam Pro 🎱
-            </Typography>
-          </Toolbar>
-        </AppBar>
+        <Drawer open={this.state.drawerOpen} onRequestClose={this.toggleDrawer(false)}>
+          <div
+            role="button"
+            onClick={this.toggleDrawer('left', false)}
+            onKeyDown={this.toggleDrawer('left', false)}
+          >
+            {sideList}
+          </div>
+        </Drawer>
 
+        <PoolcamAppBar styles={styles} toggleDrawer={this.toggleDrawer} />
+
+        <div className={css`padding: 0px 10px;`}>
         <Grid container spacing={24}>
           <Grid item xs={12} sm={6}>
-
-            <Button raised color="primary" className={styles.button}>
-              Begin Game
-            </Button>
-
+            { activeGameOrPlayerQueue }
           </Grid>
           <Grid item xs={12} sm={6}>
-
-            <Typography type="subheading">
-              Recent Games
-            </Typography>
-
-            <List>
-              <ListItem button>
-                <ListItemText primary="Jerzy vs Kirby 23 minutes ago" />
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="Dev vs Kirby 1 hour ago" />
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="All Games"/>
-              </ListItem>
-            </List>
-
+            <RecentGames />
+            <Leaderboard />
           </Grid>
         </Grid>
-
-
-
+        </div>
       </div>
     );
   }
