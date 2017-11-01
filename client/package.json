@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "http://poolcampro.s3-website-us-east-1.amazonaws.com",
   "dependencies": {
+    "axios": "^0.17.0",
     "babel-plugin-emotion": "^8.0.9",
     "emotion": "^8.0.9",
     "material-grid": "^0.1.0",
