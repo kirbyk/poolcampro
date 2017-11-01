@@ -8,6 +8,7 @@ const util = require('./util.js')
 const mongo = require('./mongo.js')
 const players = require('./players.js')
 const games = require('./games.js')
+const playerQueue = require('./queue.js')
 const ObjectId = require('mongodb').ObjectId
 
 mongo.connect()
@@ -208,6 +209,103 @@ app.get('/games/lastTen', (req, res) => {
       "err_msg": err.message
     })
   })
+})
+
+app.get('/queue', (req, res) => {
+  return res.json({
+    "success": true,
+    "queue": playerQueue.get()
+  })
+})
+
+// expects
+// {
+//     "player_id": <ObjectId string>
+// }
+app.post('/queue/add', (req, res) => {
+  if(!req.body.player_id) {
+      return res.json({
+        "success": false,
+        "msg": "Must specify a player id in player_id of body."
+      })
+  }
+
+  try {
+    playerQueue.add(ObjectId(req.body.player_id)).then(newQueue => {
+      return res.json({
+        "success": true,
+        "newQueue": newQueue
+      })
+    }).catch(err => {
+      console.log(err)
+      return res.json({
+        "success": false,
+        "err_msg": err.message
+      })
+    })
+  } catch(err) {
+      console.log(err)
+      return res.json({
+        "success": false,
+        "err_msg": err.message
+      })
+  }
+})
+
+// expects
+// {
+//     "player_id": <ObjectId string>
+// }
+app.post('/queue/remove', (req, res) => {
+  if(!req.body.player_id) {
+      return res.json({
+        "success": false,
+        "msg": "Must specify a player id in player_id of body."
+      })
+  }
+
+  try {
+    let result = playerQueue.remove(req.body.player_id)
+    let found = result[0]
+    let queue = result[1]
+
+    if(found) {
+      return res.json({
+        "success": true,
+        "newQueue": queue
+      })
+    } else {
+      return res.json({
+        "success": false,
+        "msg": "player id not found in queue"
+      })
+    }
+  } catch(err) {
+      console.log(err)
+      return res.json({
+        "success": false,
+        "err_msg": err.message
+      })
+  }
+})
+
+app.get('/queue/pop', (req, res) => {
+    let result = playerQueue.pop()
+    let poppedPlayer = result[0]
+    let queue = result[1]
+
+    if(poppedPlayer != null) {
+      return res.json({
+        "success": true,
+        "poppedPlayer": poppedPlayer,
+        "newQueue": queue
+      })
+    } else {
+      return res.json({
+        "success": false,
+        "msg": "queue is empty"
+      })
+    }
 })
 
 server.listen(8080)
