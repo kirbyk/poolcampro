@@ -47,12 +47,6 @@ class App extends Component {
 
     // need to fetch this from some API
     const gameInProgress = false
-    let activeGameOrPlayerQueue = null
-    if (gameInProgress) {
-      activeGameOrPlayerQueue = <ActiveGame styles={styles} />
-    } else {
-      activeGameOrPlayerQueue = <PlayerQueue styles={styles} />
-    }
 
     const sideList = (
       <List>
@@ -85,7 +79,14 @@ class App extends Component {
         <div className={css`padding: 0px 10px;`}>
         <Grid container spacing={24}>
           <Grid item xs={12} sm={6}>
-            { activeGameOrPlayerQueue }
+            <div className={css`
+              display: flex;
+              flex-direction: column;
+              height: 100%;
+            `}>
+              <ActiveGame styles={styles} />
+              <PlayerQueue styles={styles} />
+            </div>
           </Grid>
           <Grid item xs={12} sm={6}>
             <RecentGames />

@@ -34,19 +34,18 @@ const playerQueueItem = css`
   flex-grow: 3;
   max-width: 300px;
 `
-const PlayerQueueItem = (props) =>{
-  return <div className={playerQueueItem}>
-    <ListItem>
-      <Avatar>
-        <PersonIcon />
-      </Avatar>
-      <ListItemText
-        primary={ props.player.name }
-      />
-      <LeaveButton onClick={() => props.remove(props.player)} hidden={props.player._id !== me._id} />
-    </ListItem>
-  </div>
-}
+const PlayerQueueItem = (props) =>
+<div className={playerQueueItem}>
+  <ListItem>
+    <Avatar>
+      <PersonIcon />
+    </Avatar>
+    <ListItemText
+      primary={ props.player.name }
+    />
+    <LeaveButton onClick={() => props.remove(props.player)} hidden={props.player._id !== me._id} />
+  </ListItem>
+</div>
 
 class PlayerQueue extends Component {
   constructor(props) {
@@ -55,10 +54,10 @@ class PlayerQueue extends Component {
       queue: [
         { _id: 1, name: "Dev Ittycheria", wins: 42, losses: 0 },
         { _id: 2, name: "Kay Kim", wins: 42, losses: 0 },
-        { _id: 3, name: "Shannon Bradshaw", wins: 42, losses: 0 },
-        { _id: 4, name: "Niyati Shah", wins: 42, losses: 0 },
-        { _id: 5, name: "Andrew Aldridge", wins: 42, losses: 0 },
-        { _id: 6, name: "Jon DeStefano", wins: 42, losses: 0 },
+        // { _id: 3, name: "Shannon Bradshaw", wins: 42, losses: 0 },
+        // { _id: 4, name: "Niyati Shah", wins: 42, losses: 0 },
+        // { _id: 5, name: "Andrew Aldridge", wins: 42, losses: 0 },
+        // { _id: 6, name: "Jon DeStefano", wins: 42, losses: 0 },
         // { _id: 7, name: "Nick Larew", wins: "10", losses: "8" },
         { _id: 8, name: "Rhys Howell", wins: 42, losses: 0 },
         { _id: 9, name: "Kirby Kohlmorgen", wins: "30", losses: "4" },
@@ -118,7 +117,7 @@ class PlayerQueue extends Component {
     let userIsInQueue = this.state.queue.filter(p => p._id === me._id).length > 0
     console.log(userIsInQueue);
     return (
-      <div>
+      <div className={css`flex-grow: 1`}>
       <Typography type="title" className={css`
         padding: 10px;
       `}>
